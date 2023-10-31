@@ -25,3 +25,12 @@ const readDirectory = async (currDir) =>{
 }
 
 readDirectory('./test');
+
+/*  line 13~16을 콜백함수로 표현해본다면 
+    if(stat(Path, (err, info) =>{
+        info.isDirectory();
+    })
+        readDirectory(Path, (err) =>{
+            if(err) consol.error(err);
+        })
+*/
