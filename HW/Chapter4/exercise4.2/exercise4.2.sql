@@ -5,7 +5,7 @@ CREATE TABLE `users` (
     `nickname` VARCHAR(50) NOT NULL,
     `profile_img_link` VARCHAR(80) NOT NULL,
     `profile_msg` VARCHAR(80) NOT NULL,
-    `withdrawal` TINYINT(1) DEFAULT 0,
+    `withdrawal` TINYINT(1) NOT NULL DEFAULT 0,
     `register_date` DATE NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -16,7 +16,7 @@ CREATE TABLE `channels` (
     `user_create` INT NOT NULL,
     `channel_link` VARCHAR(80) NOT NULL,
     `max_capacity` INT NOT NULL,
-    `withdrawal` TINYINT(1) DEFAULT 0,
+    `withdrawal` TINYINT(1) NOT NULL DEFAULT 0,
     `create_date` DATE NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_create`)
