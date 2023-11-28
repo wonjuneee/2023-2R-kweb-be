@@ -26,6 +26,7 @@ SELECT `types`.`name` AS `type`,
     INNER JOIN `stations` AS `s2` on `trains`.`destination` = `s2`.`id`
     ORDER BY `departure`;
 
+/*
 SELECT `trains`.`id`, `types`.`name`, `s1`.`name` AS `scr_stn`, 
     `s2`.`name` AS `dst_stn`, Count(`user`) AS `occupied`, 
     `max_seats` AS `maximum` FROM `tickets`
@@ -34,6 +35,25 @@ SELECT `trains`.`id`, `types`.`name`, `s1`.`name` AS `scr_stn`,
     INNER JOIN `stations` AS `s2` on `trains`.`destination` = `s2`.`id`
     INNER JOIN `types` on `trains`.`type` = `types`.`id`
     GROUP BY `trains`.`id` ORDER BY `trains`.`id`;
+*/
+-- mysql 버전이 달라서 발생하는 문제 같습니다.
+-- 업데이트 된 후, Group By 절에 포함되지 않는 Column (nonaggregated column)을 select 할 경우,
+-- 컬럼의 어느 부분에 표시해야 할 지 애매하여 에러가 발생합니다.
+SELECT 
+    `trains`.`id`,
+    `types`.`name` as `type`,
+    st1.name as src_stn,
+    st2.name as dst_stn,
+    COUNT(`tickets`.`id`) as occupied,
+    `types`.max_seats as maximum
+FROM trains 
+    LEFT OUTER JOIN `tickets` ON trains.id = tickets.train
+    INNER JOIN `types` ON trains.`type` = `types`.`id` 
+    INNER JOIN `stations` as st1 ON trains.`source` = st1.id
+    INNER JOIN `stations` as st2 ON trains.destination = st2.id
+GROUP BY trains.id
+ORDER BY trains.id ASC;
+
 
 SELECT `trains`.`id`, `types`.`name`, `s1`.`name` AS `scr_stn`, 
     `s2`.`name` AS `dst_stn`, Count(`user`) AS `occupied`, 

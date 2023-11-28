@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const session = require('express-session');
 
+const controller = require('./controller');
 const { errorHandler } = require('./lib/error-handler');
 
 const { MODE, SESSION_SECRET } = process.env;
@@ -22,6 +23,9 @@ app.use(session({
 	saveUninitialized: true,
 }));
 
-app.use(errorHandler);
+app.use('/', controller);
+// controller 미들웨어가 먼저 사용된 다음에
+app.use(errorHandler); 
+// errorHandler 미들웨어가 위의 미들웨어의 에러를 받아 처리할 수 있도록 순서를 지켜야 함.
 
 module.exports = app;
